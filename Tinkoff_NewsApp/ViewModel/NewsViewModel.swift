@@ -9,8 +9,10 @@ import Foundation
 
 class  NewsViewModel {
     
-     var newsArray =  [News]()
+    var newsArray =  [News]()
     private var networkService : NetworkManager!
+    var onUpdate: ()->Void = {}
+    var onUpdateError: ()-> Void = {}
     
     
     init(networkService : NetworkManager) {
@@ -32,21 +34,7 @@ class  NewsViewModel {
             }
         }
     }
-//    func configureDataStore() {
-//        if let data = UserDefaults.standard.data(forKey: "news") {
-//            do {
-//                // Create JSON Decoder
-//                let decoder = JSONDecoder()
-//                // Decode Note
-//                //newsArray тип [News]
-//              newsArray = try decoder.decode([News].self, from: data)
-//
-//            } catch {
-//                print("Unable to Decode Notes (\(error))")
-//            }
-//        }
-//
-//    }
+
     func pullToRefresh(completionHandler: @escaping (Result<[News], Error>)->Void) {
         
         networkService.getNews(pageNumber: 1, pageSize: 20) { [weak self] (result) in
@@ -55,99 +43,70 @@ class  NewsViewModel {
                 if let decodedData = data {
                     self?.newsArray = decodedData
                     do {
-                                        // Create JSON Encoder
-                                        let encoder = JSONEncoder()
-                                        // Encode Note
+                        // Create JSON Encoder
+                        let encoder = JSONEncoder()
+                        // Encode Note
                         let newdata = try encoder.encode(self?.newsArray)
-                    
-                                        // Write/Set Data
-                                        //UserDefaults.standard.removeObject(forKey: "news")
-                                        UserDefaults.standard.set(newdata, forKey: "news")
-                                    }
-                                    catch {
-                    
-                                    }
-                                
+                        
+                        UserDefaults.standard.set(newdata, forKey: "news")
+                    }
+                    catch {
+                    }
                     completionHandler(.success(decodedData))
                 }
-                
             case .failure(let error):
                 completionHandler(.failure(error))
+                
             }
         }
-        
-//        fetchNews(pageNumber: 1, pageSize: 5) { (result) in
-//
-//            switch result {
-//
-//            case .success(let decodedData):
-//                do {
-//                    // Create JSON Encoder
-//                    let encoder = JSONEncoder()
-//                    // Encode Note
-//                    let data = try encoder.encode(decodedData)
-//
-//                    // Write/Set Data
-//                    //UserDefaults.standard.removeObject(forKey: "news")
-//                    UserDefaults.standard.set(data, forKey: "news")
-//                }
-//
-//                catch {
-//
-//                }
-//            case .failure(_):
-//              print("error")
-//            }
-//        }
-    
-    
     }
-    
-    func configureDataStore(page:Int) {
+        
+    func configureDataStore(page:Int, completion: @escaping ([News])->Void) {
         if let data = UserDefaults.standard.data(forKey: "news") {
             do {
                 // Create JSON Decoder
                 let decoder = JSONDecoder()
                 // Decode Note
                 //newsArray тип [News]
-              let obj = try decoder.decode([News].self, from: data)
-                newsArray.append(contentsOf: obj)
-              
+              let objects = try decoder.decode([News].self, from: data)
+              let first20 =  objects.enumerated().compactMap{ $0.offset < 20 ? $0.element : nil }
+               
+                completion(first20)
+                
             } catch {
                 print("Unable to Decode Notes (\(error))")
             }
         } else {
-            fetchNews(pageNumber: page, pageSize: 20) { (result) in
-                
+        
+        fetchNews(pageNumber: page, pageSize: 20) { [weak self] (result) in
                 switch result {
-                
                 case .success(let decodedData):
                     do {
                         // Create JSON Encoder
                         let encoder = JSONEncoder()
                         // Encode Note
                         let data = try encoder.encode(decodedData)
-                        // Write/Set Data
-                        //UserDefaults.standard.removeObject(forKey: "news")
                         UserDefaults.standard.set(data, forKey: "news")
-                    }
-                    
-                    catch {
                        
+                        self?.onUpdate()
+                    }
+                    catch {
                     }
                 case .failure(_):
                   print("error")
+                    self?.onUpdateError()
                 }
-            }
+        }
         }
         
     }
+
     
     func countingClicks(indexPath: IndexPath , viewModel: NewsViewModel) {
-        
+
         var element = viewModel.newsArray[indexPath.row]
         print(element)
-        
+
         if var count = element.counter {
             count += 1
             element.counter = count
@@ -155,23 +114,21 @@ class  NewsViewModel {
             element.counter = 1
         }
         viewModel.newsArray[indexPath.row] = element
-        
+
         do {
-            // Create JSON Encoder
             let encoder = JSONEncoder()
-            // Encode Note
-            let data = try encoder.encode(viewModel.newsArray)
-            
-            // Write/Set Data
-           // UserDefaults.standard.removeObject(forKey: "news")
+            let data = try encoder.encode(newsArray)
             UserDefaults.standard.set(data, forKey: "news")
         }
         catch {
             print(error)
         }
     }
+ 
+        
+  
     
-     func loadMorePopularMovies() {
+    func loadMorePopularMovies(completion: @escaping (Result<[News],Error>)-> Void) {
 
         let pageNumber =  1
         let  pg = pageNumber + 1
@@ -183,9 +140,11 @@ class  NewsViewModel {
             case .success(let data):
                 if let data = data {
                     self?.newsArray.append(contentsOf: data)
+                    completion(.success(data))
                 }
-            case .failure(_):
-             print("e")
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
         do {
@@ -194,43 +153,17 @@ class  NewsViewModel {
             // Encode Note
             let data = try encoder.encode(self.newsArray)
             
-            // Write/Set Data
-           // UserDefaults.standard.removeObject(forKey: "news")
             UserDefaults.standard.set(data, forKey: "news")
         }
         catch {
-            print(error)
+            onUpdate()
         }
         }
-     }
+        else {
+            onUpdate()
+        }
         
-
+    }
         
-    
-//    func savingDataFromWeb(pageNumber: Int, completion: @escaping (Error)->Void ) {
-//        fetchNews(pageNumber: pageNumber) { (result) in
-//
-//            switch result {
-//
-//            case .success(let decodedData):
-//                do {
-//                    // Create JSON Encoder
-//                    let encoder = JSONEncoder()
-//                    // Encode Note
-//                    let data = try encoder.encode(decodedData)
-//
-//                    // Write/Set Data
-//                    UserDefaults.standard.removeObject(forKey: "news")
-//                    UserDefaults.standard.set(data, forKey: "news")
-//                }
-//
-//                catch (let error){
-//                    completion(error)
-//                }
-//            case .failure(let error):
-//                completion(error)
-//            }
-//        }
-//    }
-   
 }
+

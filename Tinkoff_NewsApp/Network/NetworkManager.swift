@@ -9,12 +9,12 @@ import Foundation
 
 class NetworkManager {
     
-    static let shared = NetworkManager()
-    //private init() {}
+   
     
     private let baseUrl = "https://newsapi.org/v2/"
     private let headers = "top-headlines?country=us&page="
-    private let apiKey = "cc4981b5a8d143c4a13bf5dae5626be7"
+    private let apiKey = "a27c0a3bfdbf44ba8ec42398ed92f23f"
+   // private let apiKey = "cc4981b5a8d143c4a13bf5dae5626be7" no more valid
    
     
     func getNews(pageNumber: Int,pageSize: Int, completion: @escaping (Result<[News]?,Error>)->Void) {
@@ -27,6 +27,7 @@ class NetworkManager {
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
+                    print(error.localizedDescription)
                 }
                
             }

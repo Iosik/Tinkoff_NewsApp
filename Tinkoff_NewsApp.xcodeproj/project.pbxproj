@@ -16,6 +16,7 @@
 		12DD87AC27AFA0A70007D63E /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87AB27AFA0A70007D63E /* News.swift */; };
 		12DD87B227AFA1890007D63E /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87B127AFA1890007D63E /* NewsViewModel.swift */; };
 		12DD87B727AFA7330007D63E /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87B627AFA7330007D63E /* NewsCell.swift */; };
+		12DD87BB27B0394E0007D63E /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87BA27B0394E0007D63E /* NetworkCheck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		12DD87AB27AFA0A70007D63E /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		12DD87B127AFA1890007D63E /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		12DD87B627AFA7330007D63E /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		12DD87BA27B0394E0007D63E /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				12DD879827AFA0340007D63E /* Assets.xcassets */,
 				12DD879A27AFA0340007D63E /* LaunchScreen.storyboard */,
 				12DD879D27AFA0340007D63E /* Info.plist */,
+				12DD87BA27B0394E0007D63E /* NetworkCheck.swift */,
 			);
 			path = Tinkoff_NewsApp;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				12DD879427AFA0300007D63E /* ViewController.swift in Sources */,
 				12DD87B727AFA7330007D63E /* NewsCell.swift in Sources */,
 				12DD879027AFA0300007D63E /* AppDelegate.swift in Sources */,
+				12DD87BB27B0394E0007D63E /* NetworkCheck.swift in Sources */,
 				12DD87AC27AFA0A70007D63E /* News.swift in Sources */,
 				12DD879227AFA0300007D63E /* SceneDelegate.swift in Sources */,
 			);

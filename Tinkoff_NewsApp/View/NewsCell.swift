@@ -9,7 +9,7 @@ import UIKit
 
 class NewsCell: UITableViewCell {
     
-    //var viewModel : NewsViewModel?
+    
     
     lazy var newsTitle: UILabel  = {
         let v = UILabel()
@@ -89,11 +89,6 @@ class NewsCell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             
-//            countLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: padding),
-//            //countLabel.heightAnchor.constraint(equalToConstant: 70),
-//
-//            countLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-//            countLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
                                         ])
 }
 }
