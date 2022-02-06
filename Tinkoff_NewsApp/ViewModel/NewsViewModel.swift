@@ -9,7 +9,7 @@ import Foundation
 
 class  NewsViewModel {
     
-    private var newsArray =  [News]()
+     var newsArray =  [News]()
     private var networkService : NetworkManager!
     private var pageNumber: Int
     
@@ -31,7 +31,47 @@ class  NewsViewModel {
             case .failure(let error):
                 completion(.failure(error))
             }
-                           
+        }
+    }
+    
+    func savingDataFromWeb(pageNumber: Int, completion: @escaping (Error)->Void ) {
+        fetchNews(pageNumber: pageNumber) { (result) in
+            
+            switch result {
+            
+            case .success(let decodedData):
+                do {
+                    // Create JSON Encoder
+                    let encoder = JSONEncoder()
+                    // Encode Note
+                    let data = try encoder.encode(decodedData)
+
+                    // Write/Set Data
+                    UserDefaults.standard.removeObject(forKey: "news")
+                    UserDefaults.standard.set(data, forKey: "news")
+                }
+                
+                catch (let error){
+                    completion(error)
+                }
+            case .failure(let error):
+                completion(error)
+            }
+        }
+    }
+    
+    func configureDataStore() {
+        if let data = UserDefaults.standard.data(forKey: "news") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+                // Decode Note
+                //newsArray тип [News]
+              newsArray = try decoder.decode([News].self, from: data)
+              
+            } catch {
+                print("Unable to Decode Notes (\(error))")
+            }
         }
     }
 }
