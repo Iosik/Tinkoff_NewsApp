@@ -13,7 +13,7 @@ struct News: Codable {
     let description: String?
     let url: String?
     
-    var counter : Int?  = 0 // новое свойство
+    var counter : Int?   // новое свойство
 }
 
 struct JsonResponse: Codable  {
