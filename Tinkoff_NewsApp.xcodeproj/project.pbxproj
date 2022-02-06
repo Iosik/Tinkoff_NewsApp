@@ -14,6 +14,7 @@
 		12DD879C27AFA0340007D63E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12DD879A27AFA0340007D63E /* LaunchScreen.storyboard */; };
 		12DD87A727AFA0920007D63E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87A627AFA0920007D63E /* NetworkManager.swift */; };
 		12DD87AC27AFA0A70007D63E /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87AB27AFA0A70007D63E /* News.swift */; };
+		12DD87B227AFA1890007D63E /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DD87B127AFA1890007D63E /* NewsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		12DD879D27AFA0340007D63E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12DD87A627AFA0920007D63E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		12DD87AB27AFA0A70007D63E /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		12DD87B127AFA1890007D63E /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 		12DD878E27AFA0300007D63E /* Tinkoff_NewsApp */ = {
 			isa = PBXGroup;
 			children = (
+				12DD87B027AFA16F0007D63E /* ViewModel */,
+				12DD87AF27AFA1650007D63E /* Controller */,
 				12DD87AA27AFA09D0007D63E /* Model */,
 				12DD87A527AFA07F0007D63E /* Network */,
 				12DD878F27AFA0300007D63E /* AppDelegate.swift */,
 				12DD879127AFA0300007D63E /* SceneDelegate.swift */,
-				12DD879327AFA0300007D63E /* ViewController.swift */,
 				12DD879827AFA0340007D63E /* Assets.xcassets */,
 				12DD879A27AFA0340007D63E /* LaunchScreen.storyboard */,
 				12DD879D27AFA0340007D63E /* Info.plist */,
@@ -84,6 +87,22 @@
 				12DD87AB27AFA0A70007D63E /* News.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		12DD87AF27AFA1650007D63E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				12DD879327AFA0300007D63E /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		12DD87B027AFA16F0007D63E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				12DD87B127AFA1890007D63E /* NewsViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12DD87A727AFA0920007D63E /* NetworkManager.swift in Sources */,
+				12DD87B227AFA1890007D63E /* NewsViewModel.swift in Sources */,
 				12DD879427AFA0300007D63E /* ViewController.swift in Sources */,
 				12DD879027AFA0300007D63E /* AppDelegate.swift in Sources */,
 				12DD87AC27AFA0A70007D63E /* News.swift in Sources */,
